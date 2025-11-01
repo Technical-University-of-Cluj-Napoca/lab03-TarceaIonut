@@ -1,3 +1,5 @@
+import pygame
+
 from utils import *
 from grid import Grid
 from searching_algorithms import *
@@ -19,6 +21,8 @@ if __name__ == "__main__":
     # flags for running the main loop
     run = True
     started = False
+
+    algorithm:str = "ida"
 
     while run:
         grid.draw()  # draw the grid and its spots
@@ -66,10 +70,22 @@ if __name__ == "__main__":
                         for spot in row:
                             spot.update_neighbors(grid.grid)
                     # here you can call the algorithms
-                    # bfs(lambda: grid.draw(), grid, start, end)
-                    # dfs(lambda: grid.draw(), grid, start, end)
-                    # astar(lambda: grid.draw(), grid, start, end)
-                    # ... and the others?
+                    if algorithm == "astar":
+                        astar(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "bfs":
+                        bfs(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "dfs":
+                        dfs(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "dls":
+                        dls(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "ucs":
+                        ucs(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "dijkstra":
+                        dijkstra(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "iddfs":
+                        iddfs(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "ida":
+                        ida(lambda: grid.draw(), grid, start, end)
                     started = False
 
                 if event.key == pygame.K_c:
