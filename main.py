@@ -22,7 +22,7 @@ if __name__ == "__main__":
     run = True
     started = False
 
-    algorithm:str = "bfs"
+    algorithm:str = "ida"
 
     while run:
         grid.draw()  # draw the grid and its spots
@@ -76,10 +76,16 @@ if __name__ == "__main__":
                         bfs(lambda: grid.draw(), grid, start, end)
                     if algorithm == "dfs":
                         dfs(lambda: grid.draw(), grid, start, end)
-                    # bfs(lambda: grid.draw(), grid, start, end)
-                    # dfs(lambda: grid.draw(), grid, start, end)
-                    # astar(lambda: grid.draw(), grid, start, end)
-                    # ... and the others?
+                    if algorithm == "dls":
+                        dls(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "ucs":
+                        ucs(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "dijkstra":
+                        dijkstra(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "iddfs":
+                        iddfs(lambda: grid.draw(), grid, start, end)
+                    if algorithm == "ida":
+                        ida(lambda: grid.draw(), grid, start, end)
                     started = False
 
                 if event.key == pygame.K_c:
