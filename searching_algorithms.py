@@ -45,7 +45,8 @@ def bfs(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
                 ueue.append(neighbor)
                 neighbor.make_open()
 
-        draw()
+        if not draw():
+            return False
         if current != start:
             current.make_closed()
 
@@ -84,7 +85,8 @@ def dfs(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
                 stack.append(neighbor)
                 neighbor.make_open()
 
-        draw()
+        if not draw():
+            return False
         if current != start:
             current.make_closed()
 
@@ -148,7 +150,8 @@ def astar(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
                 came_from[neighbor] = current
                 pq.put((h((neighbor.x, neighbor.y), (end.x, end.y)), distance + 1, neighbor))
                 neighbor.make_open()
-        draw()
+        if not draw():
+            return False
         if current != start:
             current.make_closed()
     pass
@@ -188,8 +191,8 @@ def dls(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
                     neighbor.make_open()
                     visited.add(neighbor)
 
-
-        draw()
+        if not draw():
+            return False
         if current != start:
             current.make_closed()
 
@@ -228,7 +231,8 @@ def ucs(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
                 came_from[neighbor] = current
                 pq.put((distance + 1, neighbor))
                 neighbor.make_open()
-        draw()
+        if not draw():
+            return False
         if current != start:
             current.make_closed()
     pass
@@ -279,7 +283,8 @@ def dijkstra(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
                     pq.put((distance + 1, neighbor))
                     neighbor.make_open()
 
-        draw()
+        if not draw():
+            return False
         current.make_closed()
 
     if map.get(end) is not None :
@@ -294,7 +299,7 @@ def dijkstra(draw: callable, grid: Grid, start: Spot, end: Spot) -> bool:
     return False
     pass
 
-def dls_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:int) -> bool:
+def dls_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:int) -> bool | None:
     """
     Depth-First Search (DFS) Algorithm.
     Args:
@@ -327,8 +332,8 @@ def dls_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:int) -> 
                     neighbor.make_open()
                     visited.add(neighbor)
 
-
-        draw()
+        if not draw():
+            return None
         if current != start:
             current.make_closed()
 
@@ -351,11 +356,14 @@ def clear_grid_general(grid: Grid, start: Spot, end: Spot, walls:bool):
 
 def iddfs(draw: callable, grid: Grid, start: Spot, end: Spot):
     for deapth in range(2500):
-        if dls_limit(draw, grid, start, end, deapth):
+        x = dls_limit(draw, grid, start, end, deapth);
+        if x is None:
+            return
+        if x:
             break
         clear_grid_general(grid, start, end, False)
 
-def dfs_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:float) -> tuple[bool, float]:
+def dfs_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:float) -> tuple[bool, float] | None:
     """
     Depth-First Search (DFS) Algorithm.
     Args:
@@ -393,7 +401,8 @@ def dfs_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:float) -
                 stack.append((neighbor, cost + 1))
                 neighbor.make_open()
 
-        draw()
+        if not draw():
+            return None
         if current != start:
             current.make_closed()
 
@@ -402,7 +411,10 @@ def dfs_limit(draw: callable, grid: Grid, start: Spot, end: Spot, limit:float) -
 def ida(draw: callable, grid: Grid, start: Spot, end: Spot):
     f = 0
     while True:
-        success, min_cost = dfs_limit(draw, grid, start, end, f)
+        x = dfs_limit(draw, grid, start, end, f)
+        if x is None:
+            return
+        success, min_cost = x
         if success:
             break
         clear_grid_general(grid, start, end, False)

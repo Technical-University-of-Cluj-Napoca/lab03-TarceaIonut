@@ -1,9 +1,12 @@
 import pygame
 
 # some global constants
-WIDTH = 800
-HEIGHT = 800
-
+WIDTH = 1400
+HEIGHT = 1000
+WIDTH_GRID = 1000
+HEIGHT_GRID = HEIGHT
+ROWS = 50  # number of rows
+COLS = 50  # number of columns
 # colors.
 # if you find it more suitable, change this dictionary to standalone constants like: RED = (255, 0, 0)
 COLORS = {
@@ -17,4 +20,9 @@ COLORS = {
     'ORANGE': (255, 165 ,0),      # nodes being considered
     'GREY': (128, 128, 128),      # grid lines
     'TURQUOISE': (64, 224, 208)   # neighbor nodes
+}
+COMMAND = {
+    "EXIT" : 1,
+    "STOP" : 2,
+    "NOTHING" : 3
 }
